@@ -1,169 +1,474 @@
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080D18">
-<title>FootZone Live | Live Football</title>
+<meta name="description" content="FootZone Live - Live football scores, fixtures and major leagues.">
+<title>FootZone Live | Football Center</title>
+
 <style>
+:root{
+ --bg:#080D18;
+ --panel:#111D31;
+ --panel2:#162640;
+ --blue:#168BFF;
+ --text:#fff;
+ --muted:#9AABC2;
+ --border:#263C59;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#080D18;color:white;font-family:Arial,sans-serif}
-header{padding:22px 7%;display:flex;justify-content:space-between;align-items:center;background:#0c1423;border-bottom:1px solid #20334e}
+body{
+ background:var(--bg);
+ color:var(--text);
+ font-family:Arial,sans-serif;
+}
+header{
+ height:75px;
+ padding:0 6%;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ background:#0b1424;
+ border-bottom:1px solid var(--border);
+ position:sticky;
+ top:0;
+ z-index:10;
+}
 .logo{font-size:23px;font-weight:900}
-.logo span,h1 span{color:#168BFF}
-nav{display:flex;gap:20px}
-nav a{color:#bbc9dc;text-decoration:none}
-.hero{margin:30px auto;max-width:1100px;padding:55px 30px;background:linear-gradient(120deg,#102849,#101b31);border-radius:16px}
-.hero h1{font-size:clamp(35px,6vw,60px);margin-bottom:15px}
-.hero p{color:#a9bad0;line-height:1.7}
-.container{max-width:1100px;margin:40px auto;padding:0 18px}
-.heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.heading span{color:#168BFF}
-button{background:#168BFF;color:white;border:0;padding:11px 18px;border-radius:7px;cursor:pointer}
-.filters{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
-.filters button{background:#14243b}
-.filters button.active{background:#168BFF}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
-.card{background:#111D31;border:1px solid #263c59;padding:20px;border-radius:12px}
-.league{color:#92a9c5;font-size:13px;margin-bottom:22px}
-.teams{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:center;font-weight:bold}
-.team{flex:1;min-width:0}
-.team img{width:42px;height:42px;object-fit:contain;display:block;margin:0 auto 9px}
-.score{font-size:22px;color:#168BFF;white-space:nowrap}
-.time{color:#92a9c5;text-align:center;margin-top:18px;font-size:13px}
-.status{color:#58adff;text-align:center;margin-top:10px;font-size:12px}
-.loading,.empty{color:#a9bad0;padding:25px;text-align:center;grid-column:1/-1}
-footer{text-align:center;padding:35px;color:#8fa4c0;border-top:1px solid #20334e;margin-top:70px}
-@media(max-width:600px){header{padding:18px}nav{gap:12px}nav a{font-size:12px}.hero{margin:18px 12px;padding:35px 20px}}
+.logo span,.blue{color:var(--blue)}
+nav{display:flex;gap:25px}
+nav a{color:#c1cee0;text-decoration:none;font-size:14px}
+nav a:hover{color:var(--blue)}
+.hero{
+ max-width:1200px;
+ margin:30px auto;
+ padding:65px 35px;
+ border-radius:18px;
+ background:linear-gradient(115deg,#102849,#101b31 65%,#080D18);
+ border:1px solid #1d3d65;
+}
+.hero small{color:#4aa6ff;font-weight:bold;letter-spacing:3px}
+.hero h1{font-size:clamp(38px,6vw,68px);margin:18px 0}
+.hero p{color:var(--muted);line-height:1.7}
+.hero button{
+ margin-top:25px;
+ background:var(--blue);
+ color:white;
+ border:0;
+ border-radius:8px;
+ padding:14px 23px;
+ font-weight:bold;
+ cursor:pointer;
+}
+.container{max-width:1200px;margin:45px auto;padding:0 20px}
+.heading{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:22px;
+ gap:12px;
+}
+.heading h2{font-size:25px}
+.heading span{color:var(--blue)}
+.date{color:var(--muted);font-size:14px}
+.toolbar{
+ display:flex;
+ gap:12px;
+ flex-wrap:wrap;
+ margin-bottom:20px;
+}
+.search{
+ flex:1;
+ min-width:190px;
+ padding:13px;
+ background:var(--panel);
+ color:white;
+ border:1px solid var(--border);
+ border-radius:8px;
+ outline:none;
+}
+.search:focus{border-color:var(--blue)}
+.filters{
+ display:flex;
+ gap:9px;
+ flex-wrap:wrap;
+ margin-bottom:15px;
+}
+.filter{
+ background:var(--panel);
+ border:1px solid var(--border);
+ color:#dce7f7;
+ padding:10px 16px;
+ border-radius:7px;
+ cursor:pointer;
+}
+.filter:hover,.filter.active{
+ background:var(--blue);
+ border-color:var(--blue);
+ color:white;
+}
+.league-filters{margin-bottom:25px}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+ gap:17px;
+}
+.card{
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:13px;
+ padding:20px;
+ transition:.2s;
+}
+.card:hover{
+ transform:translateY(-3px);
+ border-color:var(--blue);
+}
+.league{
+ display:flex;
+ align-items:center;
+ gap:8px;
+ color:var(--muted);
+ font-size:13px;
+ margin-bottom:23px;
+}
+.league img{width:24px;height:24px;object-fit:contain}
+.teams{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:8px;
+ text-align:center;
+}
+.team{flex:1;min-width:0;font-weight:bold;font-size:14px}
+.team img{
+ display:block;
+ width:43px;
+ height:43px;
+ object-fit:contain;
+ margin:0 auto 10px;
+}
+.score{
+ color:var(--blue);
+ font-size:23px;
+ font-weight:bold;
+ white-space:nowrap;
+}
+.match-status{
+ text-align:center;
+ margin-top:20px;
+ font-size:12px;
+ color:var(--muted);
+}
+.live{color:#ff5353;font-weight:bold}
+.finished{color:#67b3ff}
+.upcoming{color:#a6c8ed}
+.venue{
+ color:var(--muted);
+ font-size:12px;
+ text-align:center;
+ margin-top:12px;
+}
+.loading,.empty{
+ grid-column:1/-1;
+ padding:35px;
+ text-align:center;
+ color:var(--muted);
+ background:var(--panel);
+ border-radius:10px;
+}
+.error{color:#ff7777}
+.section-title{font-size:24px;margin-bottom:20px}
+.league-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+ gap:13px;
+}
+.league-box{
+ background:var(--panel);
+ border:1px solid var(--border);
+ border-radius:12px;
+ padding:20px;
+ text-align:center;
+ cursor:pointer;
+ transition:.2s;
+}
+.league-box:hover{border-color:var(--blue)}
+.league-box img{
+ width:55px;
+ height:55px;
+ object-fit:contain;
+ margin-bottom:12px;
+}
+.league-box p{font-size:13px;font-weight:bold}
+footer{
+ border-top:1px solid var(--border);
+ margin-top:70px;
+ padding:35px 15px;
+ text-align:center;
+ color:var(--muted);
+ font-size:13px;
+}
+footer strong{color:var(--blue)}
+@media(max-width:650px){
+ header{padding:0 17px}
+ nav{gap:12px}
+ nav a{font-size:12px}
+ .logo{font-size:18px}
+ .hero{margin:18px 12px;padding:40px 22px}
+ .container{padding:0 14px}
+ .heading h2{font-size:20px}
+}
 </style>
 </head>
+
 <body>
+
 <header>
-<div class="logo">FOOTZONE <span>LIVE</span></div>
-<nav>
-<a href="#home">Home</a>
-<a href="#matches">Matches</a>
-</nav>
+ <div class="logo">FOOTZONE <span>LIVE</span></div>
+ <nav>
+  <a href="#home">Home</a>
+  <a href="#matches">Matches</a>
+  <a href="#leagues">Leagues</a>
+ </nav>
 </header>
 
 <section class="hero" id="home">
-<h1>LIVE THE <span>GAME.</span></h1>
-<p>Follow real football matches, live scores and upcoming fixtures.</p>
-<br>
-<button onclick="loadMatches()">Refresh Matches ↻</button>
+ <small>THE HOME OF FOOTBALL</small>
+ <h1>LIVE THE <span class="blue">GAME.</span></h1>
+ <p>Live football scores, fixtures and the biggest competitions in the world.</p>
+ <button onclick="loadMatches()">↻ Refresh Matches</button>
 </section>
 
 <main class="container" id="matches">
-<div class="heading">
-<h2>Football <span>Matches</span></h2>
-<span id="date"></span>
-</div>
 
-<div class="filters">
-<button class="active" data-filter="all">All</button>
-<button data-filter="live">Live</button>
-<button data-filter="finished">Finished</button>
-<button data-filter="upcoming">Upcoming</button>
-</div>
+ <div class="heading">
+  <h2>Football <span>Matches</span></h2>
+  <div class="date" id="date"></div>
+ </div>
 
-<div class="grid" id="matchGrid">
-<div class="loading">Loading matches...</div>
-</div>
+ <div class="toolbar">
+  <input class="search" id="search" type="search"
+   placeholder="Search your team...">
+ </div>
+
+ <div class="filters" id="statusFilters">
+  <button class="filter active" data-status="all">All</button>
+  <button class="filter" data-status="live">● Live</button>
+  <button class="filter" data-status="finished">Finished</button>
+  <button class="filter" data-status="upcoming">Upcoming</button>
+ </div>
+
+ <div class="filters league-filters" id="leagueFilters">
+  <button class="filter active" data-league="all">All Leagues</button>
+  <button class="filter" data-league="39">Premier League</button>
+  <button class="filter" data-league="140">La Liga</button>
+  <button class="filter" data-league="135">Serie A</button>
+  <button class="filter" data-league="78">Bundesliga</button>
+  <button class="filter" data-league="61">Ligue 1</button>
+  <button class="filter" data-league="2">Champions League</button>
+ </div>
+
+ <div class="grid" id="matchGrid">
+  <div class="loading">Loading football matches...</div>
+ </div>
 </main>
 
-<footer>FOOTZONE LIVE · Football for everyone</footer>
+<section class="container" id="leagues">
+ <h2 class="section-title">Top <span class="blue">Competitions</span></h2>
+
+ <div class="league-grid">
+  <div class="league-box" data-pick="39">
+   <img src="https://media.api-sports.io/football/leagues/39.png" alt="Premier League">
+   <p>Premier League</p>
+  </div>
+  <div class="league-box" data-pick="140">
+   <img src="https://media.api-sports.io/football/leagues/140.png" alt="La Liga">
+   <p>La Liga</p>
+  </div>
+  <div class="league-box" data-pick="135">
+   <img src="https://media.api-sports.io/football/leagues/135.png" alt="Serie A">
+   <p>Serie A</p>
+  </div>
+  <div class="league-box" data-pick="78">
+   <img src="https://media.api-sports.io/football/leagues/78.png" alt="Bundesliga">
+   <p>Bundesliga</p>
+  </div>
+  <div class="league-box" data-pick="61">
+   <img src="https://media.api-sports.io/football/leagues/61.png" alt="Ligue 1">
+   <p>Ligue 1</p>
+  </div>
+  <div class="league-box" data-pick="2">
+   <img src="https://media.api-sports.io/football/leagues/2.png" alt="Champions League">
+   <p>Champions League</p>
+  </div>
+ </div>
+</section>
+
+<footer>
+ <strong>FOOTZONE LIVE</strong>
+ <p style="margin-top:12px">
+  Football Scores · Fixtures · Competitions
+ </p>
+ <p style="margin-top:12px">© 2026 FootZone Live</p>
+</footer>
 
 <script>
 const grid=document.getElementById("matchGrid");
-let matches=[];
-let currentFilter="all";
+const search=document.getElementById("search");
 
-const today=()=>{
- const d=new Date();
- return new Intl.DateTimeFormat("en-CA",{
+let matches=[];
+let selectedStatus="all";
+let selectedLeague="all";
+
+function today(){
+ const parts=new Intl.DateTimeFormat("en-GB",{
   timeZone:"Africa/Tunis",
   year:"numeric",month:"2-digit",day:"2-digit"
- }).format(d);
-};
+ }).formatToParts(new Date());
+
+ const p=Object.fromEntries(parts.map(x=>[x.type,x.value]));
+ return `${p.year}-${p.month}-${p.day}`;
+}
 
 document.getElementById("date").textContent=today();
 
-function getStatus(m){
+function statusOf(m){
  const s=m.fixture.status.short;
- if(["1H","2H","HT","ET","P","LIVE","BT"].includes(s))return "live";
- if(["FT","AET","PEN"].includes(s))return "finished";
+
+ if(["1H","2H","HT","ET","P","LIVE","BT"].includes(s))
+  return "live";
+
+ if(["FT","AET","PEN"].includes(s))
+  return "finished";
+
  return "upcoming";
 }
 
+function safe(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[c]));
+}
+
 function render(){
- const list=matches.filter(m=>
- currentFilter==="all"||getStatus(m)===currentFilter
- );
+ const query=search.value.trim().toLowerCase();
+
+ const list=matches.filter(m=>{
+  const status=statusOf(m);
+  const league=String(m.league.id);
+  const names=(m.teams.home.name+" "+m.teams.away.name).toLowerCase();
+
+  return (selectedStatus==="all"||status===selectedStatus)
+   &&(selectedLeague==="all"||league===selectedLeague)
+   &&(!query||names.includes(query));
+ });
 
  if(!list.length){
- grid.innerHTML='<div class="empty">No matches found for this filter.</div>';
- return;
+  grid.innerHTML='<div class="empty">No matches found. Try another filter or date.</div>';
+  return;
  }
 
  grid.innerHTML=list.map(m=>{
- const home=m.teams.home;
- const away=m.teams.away;
- const status=getStatus(m);
- const scoreHome=m.goals.home;
- const scoreAway=m.goals.away;
- const score=status==="upcoming"?"VS":`${scoreHome??0} - ${scoreAway??0}`;
- const time=new Date(m.fixture.date).toLocaleTimeString("en-GB",{
-  timeZone:"Africa/Tunis",hour:"2-digit",minute:"2-digit"
- });
- const statusText=status==="live"?"● LIVE":status==="finished"?"FULL TIME":time;
+  const home=m.teams.home;
+  const away=m.teams.away;
+  const status=statusOf(m);
+  const time=new Date(m.fixture.date).toLocaleTimeString("en-GB",{
+   timeZone:"Africa/Tunis",hour:"2-digit",minute:"2-digit"
+  });
 
- return `
- <article class="card">
- <div class="league">${m.league.name} · ${m.league.country}</div>
- <div class="teams">
- <div class="team">
- <img src="${home.logo}" alt="" loading="lazy">
- ${home.name}
- </div>
- <div class="score">${score}</div>
- <div class="team">
- <img src="${away.logo}" alt="" loading="lazy">
- ${away.name}
- </div>
- </div>
- <div class="status">${statusText}</div>
- <div class="time">${m.fixture.venue?.name||"Football match"}</div>
- </article>`;
+  const score=status==="upcoming"
+   ?"VS"
+   :`${m.goals.home??0} - ${m.goals.away??0}`;
+
+  const statusText=status==="live"
+   ?`● LIVE ${m.fixture.status.elapsed??""}'`
+   :status==="finished"?"FULL TIME":time;
+
+  const homeLogo=safe(home.logo);
+  const awayLogo=safe(away.logo);
+  const leagueLogo=safe(m.league.logo);
+
+  return `
+   <article class="card">
+    <div class="league">
+     <img src="${leagueLogo}" alt="" loading="lazy">
+     ${safe(m.league.name)} · ${safe(m.league.country)}
+    </div>
+    <div class="teams">
+     <div class="team">
+      <img src="${homeLogo}" alt="" loading="lazy">
+      ${safe(home.name)}
+     </div>
+     <div class="score">${score}</div>
+     <div class="team">
+      <img src="${awayLogo}" alt="" loading="lazy">
+      ${safe(away.name)}
+     </div>
+    </div>
+    <div class="match-status ${status}">${statusText}</div>
+    <div class="venue">${safe(m.fixture.venue?.name||"Venue not available")}</div>
+   </article>
+  `;
  }).join("");
 }
 
 async function loadMatches(){
- grid.innerHTML='<div class="loading">Loading real football matches...</div>';
+ grid.innerHTML='<div class="loading">Loading real matches...</div>';
+
  try{
   const response=await fetch("/api/fixtures?date="+today());
   const data=await response.json();
 
-  if(!response.ok)throw new Error(data.error||"API error");
+  if(!response.ok)throw new Error(data.error||"API request failed");
 
   matches=data.matches||[];
   render();
  }catch(error){
-  grid.innerHTML='<div class="empty">Unable to load matches. Check API configuration and try again.</div>';
+  grid.innerHTML='<div class="empty error">Unable to load matches. Please check your API settings.</div>';
  }
 }
 
-document.querySelectorAll(".filters button").forEach(btn=>{
+document.querySelectorAll("[data-status]").forEach(btn=>{
  btn.addEventListener("click",()=>{
-  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll("[data-status]").forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
-  currentFilter=btn.dataset.filter;
+  selectedStatus=btn.dataset.status;
   render();
  });
 });
 
+document.querySelectorAll("[data-league]").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  document.querySelectorAll("[data-league]").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  selectedLeague=btn.dataset.league;
+  render();
+ });
+});
+
+document.querySelectorAll("[data-pick]").forEach(box=>{
+ box.addEventListener("click",()=>{
+  selectedLeague=box.dataset.pick;
+  document.querySelectorAll("[data-league]").forEach(b=>{
+   b.classList.toggle("active",b.dataset.league===selectedLeague);
+  });
+  document.getElementById("matches").scrollIntoView({behavior:"smooth"});
+  render();
+ });
+});
+
+search.addEventListener("input",render);
+
 loadMatches();
 setInterval(loadMatches,120000);
 </script>
+
 </body>
 </html>
