@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080D18">
+<meta name="description" content="FootZone Live - Actualités, calendrier et résultats du football.">
+<title>FootZone Live | Football</title>
+
+<style>
+:root {
+  --bg:#080D18;
+  --panel:#111D31;
+  --blue:#168BFF;
+  --text:#FFFFFF;
+  --muted:#9AABC2;
+}
+* {box-sizing:border-box;margin:0;padding:0}
+body {
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+}
+header {
+  height:75px;
+  padding:0 7%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid #1b2b43;
+  position:sticky;
+  top:0;
+  background:#080D18;
+  z-index:10;
+}
+.logo {font-size:23px;font-weight:900}
+.logo span {color:var(--blue)}
+nav {display:flex;gap:25px}
+nav a {
+  color:#c1cee0;
+  text-decoration:none;
+  font-size:14px;
+}
+nav a:hover {color:var(--blue)}
+.hero {
+  margin:35px auto;
+  max-width:1150px;
+  padding:65px 35px;
+  border-radius:18px;
+  background:linear-gradient(115deg,#102849,#101b31 65%,#080D18);
+  border:1px solid #1d3d65;
+}
+.hero small {color:#4aa6ff;font-weight:bold}
+.hero h1 {
+  font-size:clamp(35px,6vw,65px);
+  margin:18px 0;
+}
+.hero h1 span {color:var(--blue)}
+.hero p {color:var(--muted);line-height:1.7}
+.btn {
+  display:inline-block;
+  margin-top:25px;
+  background:var(--blue);
+  color:white;
+  padding:14px 22px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:bold;
+  border:0;
+  cursor:pointer;
+}
+.container {max-width:1150px;margin:45px auto;padding:0 20px}
+.section-title {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:22px;
+}
+.section-title h2 {font-size:24px}
+.section-title span {color:var(--blue)}
+.filters {display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.filter {
+  background:var(--panel);
+  border:1px solid #263c59;
+  color:white;
+  padding:10px 17px;
+  border-radius:7px;
+  cursor:pointer;
+}
+.filter.active,.filter:hover {
+  background:var(--blue);
+  border-color:var(--blue);
+}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+}
+.card {
+  background:var(--panel);
+  border:1px solid #20334e;
+  border-radius:13px;
+  padding:20px;
+  transition:.2s;
+}
+.card:hover {
+  border-color:var(--blue);
+  transform:translateY(-3px);
+}
+.league {
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:20px;
+}
+.teams {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-weight:bold;
+  gap:10px;
+}
+.vs {color:var(--blue);font-size:14px}
+.status {
+  color:#58adff;
+  font-size:12px;
+  margin-top:20px;
+}
+.official {
+  display:block;
+  text-align:center;
+  margin-top:15px;
+  padding:11px;
+  border:1px solid var(--blue);
+  border-radius:7px;
+  color:#65b4ff;
+  text-decoration:none;
+  font-size:13px;
+}
+.official:hover {background:#168BFF;color:white}
+.empty {
+  color:var(--muted);
+  padding:25px;
+  text-align:center;
+}
+footer {
+  border-top:1px solid #20334e;
+  text-align:center;
+  padding:35px 15px;
+  color:var(--muted);
+  margin-top:70px;
+  font-size:13px;
+}
+footer strong {color:var(--blue)}
+@media(max-width:650px) {
+  header {padding:0 17px}
+  nav {gap:12px}
+  nav a {font-size:12px}
+  .logo {font-size:18px}
+  .hero {margin:20px 12px;padding:40px 22px}
+  .container {padding:0 14px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">FOOTZONE <span>LIVE</span></div>
+  <nav>
+    <a href="#home">Accueil</a>
+    <a href="#matches">Matchs</a>
+    <a href="#leagues">Ligues</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <small>THE HOME OF FOOTBALL</small>
+  <h1>LIVE THE <span>GAME.</span></h1>
+  <p>
+    Toute l'actualité du football au même endroit.
+    Retrouvez les matchs, les calendriers et les liens
+    officiels des diffuseurs.
+  </p>
+  <a class="btn" href="#matches">Explorer les matchs →</a>
+</section>
+
+<main class="container" id="matches">
+  <div class="section-title">
+    <h2>Football <span>Matches</span></h2>
+  </div>
+
+  <div class="filters">
+    <button class="filter active" data-filter="all">Tous</button>
+    <button class="filter" data-filter="premier">Premier League</button>
+    <button class="filter" data-filter="laliga">La Liga</button>
+    <button class="filter" data-filter="ucl">Champions League</button>
+  </div>
+
+  <div class="grid" id="matchGrid"></div>
+</main>
+
+<section class="container" id="leagues">
+  <div class="section-title">
+    <h2>Nos <span>Compétitions</span></h2>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>Premier League</h3>
+      <p class="status">Angleterre</p>
+    </div>
+    <div class="card">
+      <h3>La Liga</h3>
+      <p class="status">Espagne</p>
+    </div>
+    <div class="card">
+      <h3>Champions League</h3>
+      <p class="status">Europe</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>FOOTZONE LIVE</strong>
+  <p style="margin-top:12px">
+    Football • Scores • Calendrier • Diffuseurs officiels
+  </p>
+  <p style="margin-top:12px">
+    © 2026 FootZone Live. Tous droits réservés.
+  </p>
+</footer>
+
+<script>
+const matches = [
+  {
+    league:"premier",
+    name:"Premier League",
+    home:"Équipe 1",
+    away:"Équipe 2",
+    time:"Horaire à confirmer"
+  },
+  {
+    league:"laliga",
+    name:"La Liga",
+    home:"Équipe 3",
+    away:"Équipe 4",
+    time:"Horaire à confirmer"
+  },
+  {
+    league:"ucl",
+    name:"Champions League",
+    home:"Équipe 5",
+    away:"Équipe 6",
+    time:"Horaire à confirmer"
+  }
+];
+
+const grid = document.getElementById("matchGrid");
+
+function showMatches(filter="all") {
+  const list = matches.filter(m =>
+    filter === "all" || m.league === filter
+  );
+
+  grid.innerHTML = list.length
+    ? list.map(m => `
+      <article class="card">
+        <div class="league">${m.name}</div>
+        <div class="teams">
+          <span>${m.home}</span>
+          <span class="vs">VS</span>
+          <span>${m.away}</span>
+        </div>
+        <div class="status">${m.time}</div>
+        <div class="official">
+          Liens officiels à ajouter
+        </div>
+      </article>
+    `).join("")
+    : '<div class="empty">Aucun match disponible.</div>';
+}
+
+document.querySelectorAll(".filter").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".filter").forEach(b =>
+      b.classList.remove("active")
+    );
+    button.classList.add("active");
+    showMatches(button.dataset.filter);
+  });
+});
+
+showMatches();
+</script>
+
+</body>
+</html>
